@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/circleci-node
+    docker:
+      - image: "circleci/node:12.12.0"
+    steps:
+      - checkout
+      - run: node main.js
+  test:
+    working_directory: ~/circleci-node
+    docker:
+      - image: "circleci/node:12.12.0"
+    steps:
+      - checkout
+      - run: node main-test.js
+
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
